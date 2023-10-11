@@ -1,4 +1,12 @@
 import { createNoise2D } from 'simplex-noise';
+/*
+0 => agua
+1 => terra
+2 => tesoro
+3 => barco pirata
+*/
+
+
 
 // Define o tamanho do array que representa o mapa -> todos os valores são mapeados de um pra um no frontend
 const width = 70;
