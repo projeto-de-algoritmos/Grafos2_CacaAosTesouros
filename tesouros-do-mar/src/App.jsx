@@ -1,5 +1,6 @@
 import './App.css'
 import mapa from './backend/mapa.js'
+import {MapItem} from './components/mapItem/mapItem.jsx'
 
 function App() {
 
@@ -12,9 +13,7 @@ function App() {
           <div className="linha" key={indexLinha}>
             {linha.map((celula, indexColuna) => {
               return (
-                <div className="celula" key={indexColuna}>
-                  {celula}
-                </div>
+                <MapItem item={celula} key={indexColuna}/>
               )
             })}
           </div>
