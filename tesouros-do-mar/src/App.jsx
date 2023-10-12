@@ -1,9 +1,9 @@
-import './App.css'
-import mapa from './backend/mapa.js'
-import {MapItem} from './components/mapItem/mapItem.jsx'
+import './App.css';
+import React from 'react';
+import { MapItem } from './components/mapItem/mapItem.jsx';
+import mapa from './backend/mapa.js';
 
 function App() {
-
   const mapa2D = mapa;
 
   return (
@@ -13,16 +13,15 @@ function App() {
           <div className="linha" key={indexLinha}>
             {linha.map((celula, indexColuna) => {
               return (
-                <MapItem item={celula} key={indexColuna}/>
+                <MapItem item={celula} key={indexColuna} />
               )
             })}
           </div>
         )
       }
       )}
-
     </div>
   )
 }
 
-export default App
+export default App;

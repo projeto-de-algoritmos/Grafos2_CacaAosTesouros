@@ -1,11 +1,15 @@
-/* .mapItem{
-} */
-
-.mapItem--water{
+.mapItem--water {
     background-color: #00BFFF;
 }
 
-.mapItem--land{
+.mapItem--land {
     background-color: #b1622a;
-    color:
+}
+
+.mapItem--treasure {
+    background-color: #f7bf07;
+}
+
+.mapItem--pirate {
+    background-color: #f70707;
 }
