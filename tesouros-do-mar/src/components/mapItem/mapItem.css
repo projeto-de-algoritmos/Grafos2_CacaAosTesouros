@@ -34,6 +34,22 @@
     background-color: #f70707;
 }
 
+.treasure--selected{
+  transform: scale(1.7);
+  animation: none;
+}
+
+.treasure--not-selected{
+  transform: scale(1);
+  animation: none;
+  cursor: default;
+}
+
+.treasure--not-selected:hover{
+  transform: scale(1);
+  animation: none;
+}
+
 
 @keyframes tesouro-piscando {
   0% {transform: scale(1)}

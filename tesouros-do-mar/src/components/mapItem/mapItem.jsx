@@ -11,6 +11,9 @@ export function MapItem(props) {
   // usado para interagir com as variáveis do redux
   const dispatch = useDispatch();
 
+  const treasurePosition = useSelector((state) => state.game.treasurePosition);
+  const isTreasureSelected = useSelector((state) => state.game.isTreasureSelected);
+
   const SelectIcon = () => {
     switch (props.item) {
       case 0:
@@ -49,10 +52,22 @@ export function MapItem(props) {
       dispatch(treasureSelected())
     }
   }
+
+  const selectedTreasureClassName = () => {
+    if(isTreasureSelected){
+      if (treasurePosition && treasurePosition[0] === props.itemPosition[0] && treasurePosition[1] === props.itemPosition[1]) {
+        return 'treasure--selected';
+      }
+      else if(props.item === 2) {
+        return 'treasure--not-selected';
+      }
+    }
+    return '';
+  }
   
   return (
     <div 
-      className={`mapItem ${mapItemClassName()}`} 
+      className={`mapItem ${mapItemClassName()} ${selectedTreasureClassName()}`} 
       onClick={() => selectTreasure()}
       >
       <SelectIcon />
