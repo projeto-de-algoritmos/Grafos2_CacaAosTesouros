@@ -1,10 +1,17 @@
 import { FaWater, FaCoins } from 'react-icons/fa';
 import { GiPalmTree, GiFishingBoat } from 'react-icons/gi';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 import './mapItem.css';
+import { setTreasurePosition } from '../../store/gameSlice';
 
 export function MapItem(props) {
-  function SelectIcon() {
+
+  // usado para interagir com as variáveis do redux
+  const dispatch = useDispatch();
+
+  const SelectIcon = () => {
     switch (props.item) {
       case 0:
         return <FaWater />;
@@ -33,9 +40,19 @@ export function MapItem(props) {
         return '';
     }
   };
+
+  const selectTreasure = () => {
+    if (props.item === 2) {
+      // Insere a posição do tesouro para o redux
+      dispatch(setTreasurePosition(props.itemPosition));
+    }
+  }
   
   return (
-    <div className={`mapItem ${mapItemClassName()}`} key={props.key}>
+    <div 
+      className={`mapItem ${mapItemClassName()}`} 
+      onClick={() => selectTreasure()}
+      >
       <SelectIcon />
     </div>
   );

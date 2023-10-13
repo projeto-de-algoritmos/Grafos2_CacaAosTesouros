@@ -2,26 +2,30 @@ import './App.css';
 import React from 'react';
 import { MapItem } from './components/mapItem/mapItem.jsx';
 import mapa from './backend/mapa.js';
-import numericMap from './backend/numericMap';
+// import numericMap from './backend/numericMap';
 
 function App() {
   return (
     <div className='container'>
+      <div className="map-title">Mapa de Ícones</div>
       <div className="map-container">
-        <div className="map-title">Mapa de Ícones</div>
         {mapa.map((linha, indexLinha) => {
           return (
             <div className="linha" key={indexLinha}>
               {linha.map((celula, indexColuna) => {
                 return (
-                  <MapItem item={celula} key={indexColuna} />
+                  <MapItem 
+                    item={celula}
+                    itemPosition={[indexLinha, indexColuna]} 
+                    key={indexColuna} 
+                  />
                 )
               })}
             </div>
           )
         })}
       </div>
-      <div className="map-container">
+      {/* <div className="map-container">
         <div className="map-title">Mapa Numérico</div>
         {mapa.map((linha, indexLinha) => {
           return (
@@ -47,7 +51,7 @@ function App() {
             </div>
           )
         })}
-      </div>
+      </div> */}
     </div>
   )
 }

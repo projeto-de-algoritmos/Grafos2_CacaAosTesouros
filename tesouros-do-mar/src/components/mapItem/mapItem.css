@@ -8,8 +8,23 @@
 
 .mapItem--treasure {
     background-color: #f7bf07;
+    cursor: pointer;
+    animation: tesouro-piscando 0.5s infinite alternate running;
+}
+
+.mapItem--treasure:hover {
+  transform: scale(1.7);
+  animation: none;
 }
 
 .mapItem--pirate {
     background-color: #f70707;
+}
+
+
+@keyframes tesouro-piscando {
+  0% {transform: scale(1)}
+  33% {transform: scale(1.3)}
+  66% {transform: scale(1.5)}
+  100% {transform: scale(1.7)}
 }
