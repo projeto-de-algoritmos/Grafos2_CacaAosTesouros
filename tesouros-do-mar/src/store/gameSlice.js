@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   treasurePosition: null,
   piratePosition: null,
+  istreasureSelected: false,
 }
 
 export const gameSlice = createSlice({
@@ -10,7 +11,8 @@ export const gameSlice = createSlice({
   initialState,
   reducers: {
     setTreasurePosition: (state, action) => {
-      state.treasurePosition = action.payload
+      state.treasurePosition = action.payload;
+      state.istreasureSelected = true;
     },
     setPiratePosition: (state, action) => {
       state.piratePosition = action.payload

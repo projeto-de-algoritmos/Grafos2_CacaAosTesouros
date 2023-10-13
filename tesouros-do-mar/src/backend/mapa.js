@@ -6,9 +6,17 @@ import { createNoise2D } from 'simplex-noise';
 3 => barco pirata
 */
 
+
+
 // Define o tamanho do array que representa o mapa -> todos os valores são mapeados de um pra um no frontend
 const width = 50;
 const height = 25;
+
+// Criado esse objeto para exportar a posição do pirata para o frontend
+let mapaDoTesouro = {
+  mapa: [],
+  posPirata: [],
+}
 
 // A função createNoise2D() retorna uma função que recebe dois parâmetros (x e y) e retorna um valor entre -1 e 1, seguindo o Perlin Noise, que mantém um certo padrão de valores próximos
 const noise = createNoise2D();
@@ -59,6 +67,8 @@ function addTreasuresAndPirate(map) {
     const yPirate = getRandomInt(0, height);
     if (map[xPirate][yPirate] === 0) {
       map[xPirate][yPirate] = 3; // 3 representa o pirata
+      // adiciona posição do pirata no objeto mapaDoTesouro para exportar
+      mapaDoTesouro.posPirata = [xPirate, yPirate];
       pirateAdded = true;
     }
   }
@@ -66,5 +76,7 @@ function addTreasuresAndPirate(map) {
 
 addTreasuresAndPirate(map);
 
-export default map;
+// Exporta o mapa e a posição do pirata
+mapaDoTesouro.mapa = map;
+export default mapaDoTesouro;
 

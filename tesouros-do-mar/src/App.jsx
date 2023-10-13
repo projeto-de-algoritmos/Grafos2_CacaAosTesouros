@@ -1,7 +1,7 @@
 import './App.css';
 import React from 'react';
 import { MapItem } from './components/mapItem/mapItem.jsx';
-import mapa from './backend/mapa.js';
+import mapaDoTesouro from './backend/mapa.js';
 // import numericMap from './backend/numericMap';
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
     <div className='container'>
       <div className="map-title">Mapa de Ícones</div>
       <div className="map-container">
-        {mapa.map((linha, indexLinha) => {
+        {mapaDoTesouro.mapa.map((linha, indexLinha) => {
           return (
             <div className="linha" key={indexLinha}>
               {linha.map((celula, indexColuna) => {
