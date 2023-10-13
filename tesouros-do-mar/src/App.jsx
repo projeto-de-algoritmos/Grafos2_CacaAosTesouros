@@ -1,57 +1,31 @@
 import './App.css';
-import React from 'react';
-import { MapItem } from './components/mapItem/mapItem.jsx';
+import React, { useEffect } from 'react';
 import mapaDoTesouro from './backend/mapa.js';
+import { Map } from './components/map/map';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPiratePosition } from './store/gameSlice';
 // import numericMap from './backend/numericMap';
 
 function App() {
+  const dispatch = useDispatch();
+
+  const isTreasureSelected = useSelector((state) => state.game.isTreasureSelected);
+
+  useEffect(() => {
+    // Coloca a posicao do pirata no redux quando inicia o frontend
+    dispatch(setPiratePosition(mapaDoTesouro.posPirata));
+  }, []);
+  
+  // Faz o djkstra quando o usuário seleciona o tesouro
+  useEffect(() => {
+    if (isTreasureSelected) {
+      alert('Você encontrou o tesouro!');
+    }
+  }, [isTreasureSelected]);
+
   return (
     <div className='container'>
-      <div className="map-title">Mapa de Ícones</div>
-      <div className="map-container">
-        {mapaDoTesouro.mapa.map((linha, indexLinha) => {
-          return (
-            <div className="linha" key={indexLinha}>
-              {linha.map((celula, indexColuna) => {
-                return (
-                  <MapItem 
-                    item={celula}
-                    itemPosition={[indexLinha, indexColuna]} 
-                    key={indexColuna} 
-                  />
-                )
-              })}
-            </div>
-          )
-        })}
-      </div>
-      {/* <div className="map-container">
-        <div className="map-title">Mapa Numérico</div>
-        {mapa.map((linha, indexLinha) => {
-          return (
-            <div className="linha" key={indexLinha}>
-              {linha.map((celula, indexColuna) => {
-                let numericClassName = `mapItem mapItem--numeric`;
-                if (celula === 0) {
-                  numericClassName += ` mapItem--water`;
-                } else if (celula === 1) {
-                  numericClassName += ` mapItem--land`;
-                } else if (celula === 2) {
-                  numericClassName += ` mapItem--treasure`;
-                } else if (celula === 3) {
-                  numericClassName += ` mapItem--pirate`;
-                }
-
-                return (
-                  <div className={numericClassName} key={indexColuna}>
-                    {celula}
-                  </div>
-                )
-              })}
-            </div>
-          )
-        })}
-      </div> */}
+      <Map mapa={mapaDoTesouro.mapa} />
     </div>
   )
 }

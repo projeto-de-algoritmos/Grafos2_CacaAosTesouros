@@ -1,3 +1,16 @@
+/* Estilo para cada célula no mapa */
+.mapItem {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  margin: 1px;
+  background-color: #fff;
+}
+
 .mapItem--water {
     background-color: #00BFFF;
 }

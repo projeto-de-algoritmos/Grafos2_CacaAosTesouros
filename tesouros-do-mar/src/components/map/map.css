@@ -1,0 +1,19 @@
+/* Estilo para cada mapa e seu título */
+.map-container {
+  display: flex;
+  margin: 10px 20px;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+.map-title {
+  font-weight: bold;
+}
+
+/* Estilo para as linhas de células do mapa */
+.map-line {
+  display: flex;
+  flex-direction: column;
+}

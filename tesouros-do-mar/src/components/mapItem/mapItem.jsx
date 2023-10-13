@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 
 import './mapItem.css';
-import { setTreasurePosition } from '../../store/gameSlice';
+import { setTreasurePosition, treasureSelected } from '../../store/gameSlice';
 
 export function MapItem(props) {
 
@@ -45,6 +45,8 @@ export function MapItem(props) {
     if (props.item === 2) {
       // Insere a posição do tesouro para o redux
       dispatch(setTreasurePosition(props.itemPosition));
+      // Muda a variável isTreasureSelected para true
+      dispatch(treasureSelected())
     }
   }
   
