@@ -32,7 +32,15 @@
 
 .mapItem--pirate {
     background-color: #f70707;
+    cursor: pointer;
+    animation: tesouro-piscando 0.5s infinite alternate running;
 }
+
+.mapItem--pirate:hover {
+  transform: scale(1.7);
+  animation: none;
+}
+
 
 .treasure--selected{
   transform: scale(1.7);
