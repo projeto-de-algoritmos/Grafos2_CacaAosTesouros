@@ -4,24 +4,29 @@ import mapaDoTesouro from './backend/mapa.js';
 import { Map } from './components/map/map';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPiratePosition } from './store/gameSlice';
-// import numericMap from './backend/numericMap';
+import pathFinder from './backend/dijkstra';
 
 function App() {
   const dispatch = useDispatch();
 
   const isTreasureSelected = useSelector((state) => state.game.isTreasureSelected);
+  const treasurePosition = useSelector((state) => state.game.treasurePosition);
+  const piratePosition = useSelector((state) => state.game.piratePosition);
+  const map = mapaDoTesouro.mapa; // Obtendo o mapa do tesouro
 
   useEffect(() => {
-    // Coloca a posicao do pirata no redux quando inicia o frontend
+    // Coloca a posição do pirata no redux quando inicia o frontend
     dispatch(setPiratePosition(mapaDoTesouro.posPirata));
   }, []);
-  
-  // Faz o djkstra quando o usuário seleciona o tesouro
+
   useEffect(() => {
     if (isTreasureSelected) {
-      alert('Você encontrou o tesouro!');
+      // Chama a função pathFinder com os parâmetros apropriados
+      const shortestPath = pathFinder(map, piratePosition, treasurePosition);
+      // Atualiza o estado com o caminho mais curto retornado pelo algoritmo Dijkstra
+      dispatch(setShortestPath(shortestPath));
     }
-  }, [isTreasureSelected]);
+  }, [isTreasureSelected, treasurePosition, piratePosition, map, dispatch]);
 
   return (
     <div className='container'>
