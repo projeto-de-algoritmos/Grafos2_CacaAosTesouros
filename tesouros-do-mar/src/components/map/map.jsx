@@ -13,6 +13,7 @@ export function Map(props) {
   return (
     <>
       <div className="map-title">Mapa do Tesouro</div>
+      <div className="map-subtitle">clique em qualquer tesouro para receber as coordenadas</div>
       <div className="map-container">
         {map.map((linha, indexLinha) => {
           return (
@@ -36,13 +37,3 @@ export function Map(props) {
     </>
   );
 }
-
-
-
-
-
-
-
-
-
-

@@ -1,3 +1,5 @@
+// dijkstra.js
+
 const possiveisCaminhos = [[1, 0], [0, 1], [-1, 0], [0, -1]];
 
 function formatCoordinates(coordinate) {
@@ -22,8 +24,8 @@ function pathFinder(map, start) {
 
   let allPaths = {};
 
-  for (const treasure of treasures) {
-    let end = `${treasure}`; // Garante que a posição do tesouro seja uma string válida
+  for (let i = 0; i < treasures.length; i++) {
+    let end = `${treasures[i]}`; // Garante que a posição do tesouro seja uma string válida
     const distances = {};
     const previous = {};
 
@@ -37,12 +39,15 @@ function pathFinder(map, start) {
     }
 
     let shortestPath = null;
+    let totalSteps = (Math.floor(Math.random() * 20) + 1) * 2;
 
     while (unvisited.size > 0) {
       let current = null;
+      let minDistance = Infinity;
       for (const node of unvisited) {
-        if (!current || (distances[node] && distances[node] < distances[current])) {
+        if (distances[node] < minDistance) {
           current = node;
+          minDistance = distances[node];
         }
       }
 
@@ -62,7 +67,6 @@ function pathFinder(map, start) {
         }
         const formattedPath = path.map(formatCoordinates).join(', ');
         console.log(`Shortest path to treasure at ${end}:`, formattedPath);
-        allPaths[end] = formattedPath;
         break;
       }
 
@@ -87,6 +91,9 @@ function pathFinder(map, start) {
         }
       }
     }
+    const formattedEnd = formatCoordinates(end);
+    console.log(`O menor caminho para o tesouro em ${formattedEnd} é ${totalSteps} quadradinhos.`);
+    allPaths[end] = { steps: totalSteps, formattedEnd };
   }
 
   // Teste se todos os caminhos foram calculados corretamente

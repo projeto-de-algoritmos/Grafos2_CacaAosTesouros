@@ -15,6 +15,7 @@ function App() {
   const isTreasureSelected = useSelector((state) => state.game.isTreasureSelected);
   const treasurePosition = useSelector((state) => state.game.treasurePosition);
   const piratePosition = useSelector((state) => state.game.piratePosition);
+  const shortestPath = useSelector((state) => state.game.shortestPath);
   const map = mapaDoTesouro.mapa;
 
   useEffect(() => {
@@ -23,17 +24,16 @@ function App() {
 
   useEffect(() => {
     if (isTreasureSelected) {
-      const shortestPathsObject = pathFinder(map, piratePosition, treasurePosition);
+      const shortestPathsObject = pathFinder(map, piratePosition);
       const shortestPathsArray = Object.entries(shortestPathsObject).map(([key, value]) => {
-        const formattedKey = key.replace(',', ', ');
-        return `${formattedKey}: ${value}`;
+        return `${key}: ${value.steps}`;
       });
       dispatch(setShortestPath(shortestPathsArray));
       setCoordinates(shortestPathsArray);
       setShowModal(true);
     }
-  }, [isTreasureSelected, treasurePosition, piratePosition, map, dispatch]);
-  
+  }, [isTreasureSelected, piratePosition, map, dispatch]);
+
   const handleCloseModal = () => {
     setShowModal(false);
   };
@@ -41,8 +41,8 @@ function App() {
   const explainCoordinates = (coordinate) => {
     const parts = coordinate.split(':');
     const treasureCoordinates = parts[0].trim();
-    const pathCoordinates = parts[1].trim();
-    return `O menor caminho para o tesouro em ${treasureCoordinates} é ${pathCoordinates}`;
+    const steps = parts[1].trim();
+    return `O menor caminho para o tesouro em ${treasureCoordinates} é ${steps} quadradinhos.`;
   };
 
   return (
