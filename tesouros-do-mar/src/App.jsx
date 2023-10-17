@@ -38,9 +38,16 @@ function App() {
     setShowModal(false);
   };
 
+  const explainCoordinates = (coordinate) => {
+    const parts = coordinate.split(':');
+    const treasureCoordinates = parts[0].trim();
+    const pathCoordinates = parts[1].trim();
+    return `O menor caminho para o tesouro em ${treasureCoordinates} é ${pathCoordinates}`;
+  };
+
   return (
     <div className='container'>
-      <Map mapa={mapaDoTesouro.mapa} />
+      <Map mapa={map} />
       {showModal && (
         <div className='modal'>
           <div className='modal-content'>
@@ -49,7 +56,7 @@ function App() {
             </span>
             <h2>Coordenadas do caminho mais curto:</h2>
             {coordinates.map((coordinate, index) => (
-              <p key={index}>{`(${coordinate})`}</p>
+              <p key={index}>{explainCoordinates(coordinate)}</p>
             ))}
           </div>
         </div>
