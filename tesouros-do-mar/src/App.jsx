@@ -23,13 +23,17 @@ function App() {
 
   useEffect(() => {
     if (isTreasureSelected) {
-      const shortestPath = pathFinder(map, piratePosition, treasurePosition);
-      dispatch(setShortestPath(shortestPath));
-      setCoordinates(shortestPath);
+      const shortestPathsObject = pathFinder(map, piratePosition, treasurePosition);
+      const shortestPathsArray = Object.entries(shortestPathsObject).map(([key, value]) => {
+        const formattedKey = key.replace(',', ', ');
+        return `${formattedKey}: ${value}`;
+      });
+      dispatch(setShortestPath(shortestPathsArray));
+      setCoordinates(shortestPathsArray);
       setShowModal(true);
     }
   }, [isTreasureSelected, treasurePosition, piratePosition, map, dispatch]);
-
+  
   const handleCloseModal = () => {
     setShowModal(false);
   };

@@ -20,8 +20,7 @@ function pathFinder(map, start) {
     }
   }
 
-  let shortestPath = null;
-  let result = {};
+  let allPaths = {};
 
   for (const treasure of treasures) {
     let end = `${treasure}`; // Garante que a posição do tesouro seja uma string válida
@@ -36,6 +35,8 @@ function pathFinder(map, start) {
         unvisited.add(`${i},${j}`);
       }
     }
+
+    let shortestPath = null;
 
     while (unvisited.size > 0) {
       let current = null;
@@ -61,7 +62,7 @@ function pathFinder(map, start) {
         }
         const formattedPath = path.map(formatCoordinates).join(', ');
         console.log(`Shortest path to treasure at ${end}:`, formattedPath);
-        result[end] = formattedPath;
+        allPaths[end] = formattedPath;
         break;
       }
 
@@ -88,11 +89,11 @@ function pathFinder(map, start) {
     }
   }
 
-  // Teste se o caminho foi calculado corretamente
-  if (shortestPath) {
-    console.log('Menor caminho calculado corretamente.');
-    console.log('Coordenadas completas do caminho:', result);
-    return shortestPath;
+  // Teste se todos os caminhos foram calculados corretamente
+  if (Object.keys(allPaths).length === treasures.length) {
+    console.log('Todos os caminhos calculados corretamente.');
+    console.log('Coordenadas completas dos caminhos:', allPaths);
+    return allPaths;
   } else {
     console.log('Ainda não.');
     return 'ainda não';
