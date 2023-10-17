@@ -10,34 +10,6 @@ export function Map(props) {
   const [map, setMap] = useState(mapaDoTesouro.mapa);
   const [displayedPath, setDisplayedPath] = useState([]);
 
-  const animatePath = (shortestPath) => {
-    let currentStep = 0;
-    const updatedMap = map.map(row => [...row]);
-  
-    const interval = setInterval(() => {
-      if (currentStep < shortestPath.length) {
-        const [x, y] = shortestPath[currentStep].split(',').map(Number);
-        updatedMap[x][y] = 4; // Atualiza para indicar o caminho percorrido
-        setMap(updatedMap);
-        currentStep++;
-      } else {
-        clearInterval(interval);
-        // Limpa o caminho e redefine o estado após a conclusão da animação
-        setDisplayedPath([]);
-        dispatch(setShortestPath(null)); // Atualiza o estado com null para limpar o caminho mais curto
-      }
-    }, 500); // Intervalo de tempo ajustável para controlar a velocidade da animação
-  
-    // Define o caminho a ser exibido durante a animação
-    setDisplayedPath(shortestPath.map(step => step));
-  };
-  
-  useEffect(() => {
-    if (shortestPath && shortestPath.length > 0) {
-      animatePath(shortestPath);
-    }
-  }, [shortestPath]);
-
   return (
     <>
       <div className="map-title">Mapa do Tesouro</div>

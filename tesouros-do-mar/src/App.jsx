@@ -1,38 +1,57 @@
 import './App.css';
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import mapaDoTesouro from './backend/mapa.js';
 import { Map } from './components/map/map';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPiratePosition } from './store/gameSlice';
 import pathFinder from './backend/dijkstra';
+import { setShortestPath } from './store/gameSlice';
 
 function App() {
   const dispatch = useDispatch();
+  const [showModal, setShowModal] = useState(false);
+  const [coordinates, setCoordinates] = useState([]);
 
   const isTreasureSelected = useSelector((state) => state.game.isTreasureSelected);
   const treasurePosition = useSelector((state) => state.game.treasurePosition);
   const piratePosition = useSelector((state) => state.game.piratePosition);
-  const map = mapaDoTesouro.mapa; // Obtendo o mapa do tesouro
+  const map = mapaDoTesouro.mapa;
 
   useEffect(() => {
-    // Coloca a posição do pirata no redux quando inicia o frontend
     dispatch(setPiratePosition(mapaDoTesouro.posPirata));
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (isTreasureSelected) {
-      // Chama a função pathFinder com os parâmetros apropriados
       const shortestPath = pathFinder(map, piratePosition, treasurePosition);
-      // Atualiza o estado com o caminho mais curto retornado pelo algoritmo Dijkstra
       dispatch(setShortestPath(shortestPath));
+      setCoordinates(shortestPath);
+      setShowModal(true);
     }
   }, [isTreasureSelected, treasurePosition, piratePosition, map, dispatch]);
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
   return (
     <div className='container'>
       <Map mapa={mapaDoTesouro.mapa} />
+      {showModal && (
+        <div className='modal'>
+          <div className='modal-content'>
+            <span className='close' onClick={handleCloseModal}>
+              &times;
+            </span>
+            <h2>Coordenadas do caminho mais curto:</h2>
+            {coordinates.map((coordinate, index) => (
+              <p key={index}>{`(${coordinate})`}</p>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
-  )
+  );
 }
 
 export default App;

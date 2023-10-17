@@ -1,69 +1,102 @@
 const possiveisCaminhos = [[1, 0], [0, 1], [-1, 0], [0, -1]];
 
-function pathFinder(map, start, end) {
+function formatCoordinates(coordinate) {
+  const coordinateString = coordinate.toString();
+  const [x, y] = coordinateString.split(',').map(Number);
+  return `(${x},${y})`;
+}
+
+function pathFinder(map, start) {
   const gridW = map[0].length;
   const gridH = map.length;
 
-  const result = {};
-
-  const distances = {};
-  const previous = {};
-
-  distances[start] = 0;
-  const unvisited = new Set();
+  const treasures = [];
 
   for (let i = 0; i < gridH; i++) {
     for (let j = 0; j < gridW; j++) {
-      unvisited.add(`${i},${j}`);
+      if (map[i][j] === 2) {
+        treasures.push(`${i},${j}`);
+      }
     }
   }
 
-  while (unvisited.size > 0) {
-    let current = null;
-    for (const node of unvisited) {
-      if (!current || (distances[node] && distances[node] < distances[current])) {
-        current = node;
+  let shortestPath = null;
+  let result = {};
+
+  for (const treasure of treasures) {
+    let end = `${treasure}`; // Garante que a posição do tesouro seja uma string válida
+    const distances = {};
+    const previous = {};
+
+    distances[start] = 0;
+    const unvisited = new Set();
+
+    for (let i = 0; i < gridH; i++) {
+      for (let j = 0; j < gridW; j++) {
+        unvisited.add(`${i},${j}`);
       }
     }
 
-    unvisited.delete(current);
-
-    if (current === end) {
-      const path = [];
-      while (previous[current]) {
-        path.push(current);
-        current = previous[current];
+    while (unvisited.size > 0) {
+      let current = null;
+      for (const node of unvisited) {
+        if (!current || (distances[node] && distances[node] < distances[current])) {
+          current = node;
+        }
       }
-      result[end] = path;
-      console.log(`Shortest path to treasure at ${end}:`, path);
-      break;
-    }
 
-    if (current === null || distances[current] === Infinity) {
-      continue;
-    }
+      unvisited.delete(current);
 
-    const [xEnd, yEnd] = end.split(',').map(Number);
-    for (const [dx, dy] of possiveisCaminhos) {
-      const [x, y] = current.split(',').map(Number);
-      const neighborX = x + dx;
-      const neighborY = y + dy;
+      if (current === end) {
+        const path = [];
+        let temp = current;
+        while (previous[temp]) {
+          path.push(temp);
+          temp = previous[temp];
+        }
+        path.push(start);
+        path.reverse();
+        if (!shortestPath || path.length < shortestPath.length) {
+          shortestPath = path;
+        }
+        const formattedPath = path.map(formatCoordinates).join(', ');
+        console.log(`Shortest path to treasure at ${end}:`, formattedPath);
+        result[end] = formattedPath;
+        break;
+      }
 
-      if (neighborX >= 0 && neighborX < gridW && neighborY >= 0 && neighborY < gridH) {
-        const neighbor = `${neighborX},${neighborY}`;
-        const weight = getWeight(map[neighborX][neighborY]);
+      if (current === null || distances[current] === Infinity) {
+        break;
+      }
 
-        const alt = distances[current] + weight;
-        if (alt < (distances[neighbor] || Infinity)) {
-          distances[neighbor] = alt;
-          previous[neighbor] = current;
+      for (const [dx, dy] of possiveisCaminhos) {
+        const [x, y] = current.split(',').map(Number);
+        const neighborX = x + dx;
+        const neighborY = y + dy;
+
+        if (neighborX >= 0 && neighborX < gridW && neighborY >= 0 && neighborY < gridH) {
+          const neighbor = `${neighborX},${neighborY}`;
+          const weight = getWeight(map[neighborX][neighborY]);
+
+          const alt = distances[current] + weight;
+          if (alt < (distances[neighbor] || Infinity)) {
+            distances[neighbor] = alt;
+            previous[neighbor] = current;
+          }
         }
       }
     }
   }
 
-  console.log("All paths calculated:", result);
-  return result;
+  // Teste se o caminho foi calculado corretamente
+  if (shortestPath) {
+    console.log('Menor caminho calculado corretamente.');
+    console.log('Coordenadas completas do caminho:', result);
+    return shortestPath;
+  } else {
+    console.log('Ainda não.');
+    return 'ainda não';
+  }
 }
 
 function getWeight(value) {
