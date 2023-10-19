@@ -9,22 +9,54 @@
 | 202016847  |  Luciano de Freitas Melo |
 | 202016945  |  Maria Eduarda dos Santos Abritta Ferreira |
 
-## Sobre 
-Descreva os objetivos do seu projeto e como ele funciona. 
+## Sobre
+Vídeo explicativo: https://youtu.be/x43oCnhI7qg
+
+O vídeo também está disponível [nesse repositório]().
+
+O objetivo do projeto foi aplicar o **algoritmo de dijkstra** de forma mais criativa e visual. Foi criado um jogo demonstrativo na temática de pirata, em que o jogador pode escolher um dos tesouros espalhados pelo mapa e o algoritmo de dijkstra irá mostrar o caminho mais curto até o tesouro escolhido. Por se tratar de um navio, que tem mais facilidade de se locomover por áreas de mar do que de terra, foi avaliado que o algoritmo de dijkstra seria o mais adequado para a aplicação, pois o mesmo é utilizado para encontrar o caminho mais curto entre dois pontos em um grafo ponderado.
 
 ## Screenshots
-Adicione 3 ou mais screenshots do projeto em funcionamento.
+
+![screenshot 1 do projeto](/tesouros-do-mar/src/assets/screenshot1.png)
+
+![screenshot 2 do projeto](/tesouros-do-mar/src/assets/screenshot3.png)
+
+![screenshot 3 do projeto](/tesouros-do-mar/src/assets/screenshot2.png)
 
 ## Instalação 
-**Linguagem**: xxxxxx<br>
-**Framework**: (caso exista)<br>
-Descreva os pré-requisitos para rodar o seu projeto e os comandos necessários.
+**Linguagem**: Javascript<br>
+**Framework**: Vite + React<br>
+
+Para rodar o projeto, é necessário ter o **node** instalado na máquina.
+
+Clonar o repositório do projeto:
+
+```
+git clone https://github.com/projeto-de-algoritmos/Grafos2_CacaAosTesouros.git
+
+```
+
+Abrir pasta do projeto no terminal e a pasta do código:
+
+```
+cd Grafos2_TesourosDoMar
+cd tesouros-do-mar
+```
+
+Instalar as dependências e rodar o projeto: 
+
+```
+npm install
+npm run dev
+```
+
+O projeto abrirá na url:
+http://localhost:3000/
 
 ## Uso 
-Explique como usar seu projeto caso haja algum passo a passo após o comando de execução.
+É necessário apenas selecionar um dos tesouros que estão piscando pelo mapa, selecionado o tesouro é só aguardar o programa mostrar o caminho mais curto até o tesouro escolhido.
 
-## Outros 
-Quaisquer outras informações sobre seu projeto podem ser descritas abaixo.
 
 
 
