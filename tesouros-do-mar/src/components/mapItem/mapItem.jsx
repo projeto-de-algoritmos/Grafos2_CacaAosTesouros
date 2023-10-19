@@ -1,18 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FaWater, FaCoins } from 'react-icons/fa';
 import { GiPalmTree, GiFishingBoat } from 'react-icons/gi';
 import { useDispatch, useSelector } from 'react-redux';
 import './mapItem.css';
 import { setTreasurePosition, treasureSelected } from '../../store/gameSlice';
 
-export function MapItem(props) {
+export function MapItem({item, itemPosition } = props) {
   // usado para interagir com as variáveis do redux
   const dispatch = useDispatch();
   const treasurePosition = useSelector((state) => state.game.treasurePosition);
   const isTreasureSelected = useSelector((state) => state.game.isTreasureSelected);
+  const shortestPath = useSelector((state) => state.game.shortestPath);
+  const [isPartOfPath, setIsPartOfPath] = useState(false);
+
+  useEffect(() => {
+    if (shortestPath.length > 0) {
+      shortestPath.forEach((position) => {
+          if (position[0] === itemPosition[0] && position[1] === itemPosition[1]) {
+            setIsPartOfPath(true);
+          }
+      });
+    }
+  }, [shortestPath, setIsPartOfPath]);
 
   const SelectIcon = () => {
-    switch (props.item) {
+    switch (item) {
       case 0:
         return <FaWater />;
       case 1:
@@ -28,7 +40,7 @@ export function MapItem(props) {
 
   const mapItemClassName = () => {
     let className = '';
-    switch (props.item) {
+    switch (item) {
       case 0:
         className = 'mapItem--water';
         break;
@@ -44,16 +56,16 @@ export function MapItem(props) {
       default:
         break;
     }
-    if (props.isPartOfPath) {
+    if (isPartOfPath) {
       className += ' mapItem--path';
     }
     return className;
   };
 
   const selectTreasure = () => {
-    if (props.item === 2) {
+    if (item === 2) {
       // Insere a posição do tesouro para o redux
-      dispatch(setTreasurePosition(props.itemPosition));
+      dispatch(setTreasurePosition(itemPosition));
       // Muda a variável isTreasureSelected para true
       dispatch(treasureSelected())
     }
@@ -61,10 +73,10 @@ export function MapItem(props) {
 
   const selectedTreasureClassName = () => {
     if(isTreasureSelected){
-      if (treasurePosition && treasurePosition[0] === props.itemPosition[0] && treasurePosition[1] === props.itemPosition[1]) {
+      if (treasurePosition && treasurePosition[0] === itemPosition[0] && treasurePosition[1] === itemPosition[1]) {
         return 'treasure--selected';
       }
-      else if(props.item === 2) {
+      else if(item === 2) {
         return 'treasure--not-selected';
       }
     }

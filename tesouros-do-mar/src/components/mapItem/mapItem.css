@@ -32,15 +32,8 @@
 
 .mapItem--pirate {
     background-color: #f70707;
-    cursor: pointer;
-    animation: tesouro-piscando 0.5s infinite alternate running;
+    transform: scale(2);   
 }
-
-.mapItem--pirate:hover {
-  transform: scale(1.7);
-  animation: none;
-}
-
 
 .treasure--selected{
   transform: scale(1.7);
@@ -56,6 +49,10 @@
 .treasure--not-selected:hover{
   transform: scale(1);
   animation: none;
+}
+
+.mapItem--path{
+  background-color: #f7bf07;
 }
 
 @keyframes tesouro-piscando {
